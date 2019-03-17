@@ -2,10 +2,8 @@ package main
 
 import (
 	"fmt"
-	"log"
-	"net/http"
-
 	"github.com/gorilla/mux"
+	"net/http"
 )
 
 func getUsers(w http.ResponseWriter, r *http.Request) {
@@ -28,7 +26,8 @@ func deleteUsers(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintln(w, "not implemented yet !")
 }
 
-func main() {
+
+func NewRouter() *mux.Router {
 	router := mux.NewRouter()
 
 	router.HandleFunc("/users", getUsers).Methods("GET")
@@ -37,9 +36,5 @@ func main() {
 	router.HandleFunc("/users", deleteUsers).Methods("DELETE")
 	router.HandleFunc("/users/{id}", findUsers).Methods("GET")
 
-	if err := http.ListenAndServe(":3000", router); err != nil {
-		log.Fatal(err)
-	}
+	return router
 }
-
-// go run app.go
